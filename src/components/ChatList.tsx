@@ -59,14 +59,20 @@ export const ChatList: React.FC<ChatListProps> = ({ onOpenNewChat, onOpenSetting
     return date.toLocaleDateString([], { day: 'numeric', month: 'short' });
   };
 
+  const isMax = credentials?.messengerType === 'max';
+
   return (
     <aside className="w-80 md:w-96 h-full bg-[#17212b] border-r border-[#101921] flex flex-col select-none flex-shrink-0">
       {/* Top Header */}
       <div className="p-3.5 border-b border-[#101921] flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-[#2481cc] flex items-center justify-center text-white font-semibold shadow-inner">
-              TG
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shadow-inner ${
+                isMax ? 'bg-purple-600' : 'bg-[#2481cc]'
+              }`}
+            >
+              {isMax ? 'MAX' : 'TG'}
             </div>
             {isPollingActive && (
               <span
@@ -76,7 +82,9 @@ export const ChatList: React.FC<ChatListProps> = ({ onOpenNewChat, onOpenSetting
             )}
           </div>
           <div className="min-w-0">
-            <h1 className="text-sm font-semibold text-white truncate">Telegram Web</h1>
+            <h1 className="text-sm font-semibold text-white truncate">
+              {isMax ? 'MAX Messenger' : 'Telegram Web'}
+            </h1>
             <div className="flex items-center gap-1.5 text-[11px] text-[#7f91a4]">
               <span className="truncate">id: {credentials?.idInstance}</span>
               <span className="text-emerald-400 flex items-center gap-0.5">

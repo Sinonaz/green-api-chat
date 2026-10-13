@@ -1,7 +1,10 @@
+export type MessengerType = 'telegram' | 'max';
+
 export interface GreenApiCredentials {
   idInstance: string;
   apiTokenInstance: string;
   apiUrl: string;
+  messengerType?: MessengerType;
 }
 
 export type MessageDirection = 'incoming' | 'outgoing';

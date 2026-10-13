@@ -47,15 +47,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ onBackMobile }) => {
     setSendError(null);
   }, [activeChatId]);
 
+  const isMax = credentials?.messengerType === 'max';
+
   if (!activeChat || !activeChatId) {
     return (
       <main className="flex-1 h-full bg-[#0e1621] telegram-chat-pattern flex flex-col items-center justify-center p-6 text-center select-none">
-        <div className="w-16 h-16 rounded-full bg-[#17212b] border border-[#232e3c] flex items-center justify-center text-[#54a9eb] mb-4 shadow-xl">
+        <div className={`w-16 h-16 rounded-full bg-[#17212b] border border-[#232e3c] flex items-center justify-center mb-4 shadow-xl ${
+          isMax ? 'text-purple-400' : 'text-[#54a9eb]'
+        }`}>
           <MessageSquare className="w-8 h-8" />
         </div>
         <h2 className="text-base font-semibold text-white mb-1">Выберите чат</h2>
         <p className="text-xs text-[#7f91a4] max-w-xs">
-          Выберите собеседника из списка слева или начните новый диалог, чтобы отправить сообщение в Telegram
+          Выберите собеседника из списка слева или начните новый диалог, чтобы отправить сообщение в {isMax ? 'MAX' : 'Telegram'}
         </p>
       </main>
     );
@@ -191,7 +195,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ onBackMobile }) => {
             <div className="bg-[#17212b]/90 border border-[#232e3c] px-5 py-3 rounded-2xl max-w-sm text-xs shadow-lg">
               <p className="font-medium text-white mb-1">История сообщений пуста</p>
               <p className="text-[#7f91a4]">
-                Напишите первое сообщение ниже. Оно будет отправлено получателю в Telegram через GREEN-API.
+                Напишите первое сообщение ниже. Оно будет отправлено получателю в {isMax ? 'MAX' : 'Telegram'} через GREEN-API.
               </p>
             </div>
           </div>
@@ -207,12 +211,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ onBackMobile }) => {
                 <div
                   className={`max-w-[78%] sm:max-w-[65%] rounded-2xl px-3.5 py-2 relative shadow-md break-words ${
                     isOutgoing
-                      ? 'bg-[#2b5278] text-white rounded-br-none'
+                      ? isMax
+                        ? 'bg-purple-700 text-white rounded-br-none'
+                        : 'bg-[#2b5278] text-white rounded-br-none'
                       : 'bg-[#182533] text-white rounded-bl-none border border-[#243343]/30'
                   }`}
                 >
                   {!isOutgoing && msg.senderName && (
-                    <div className="text-[11px] font-semibold text-[#54a9eb] mb-0.5">
+                    <div className={`text-[11px] font-semibold mb-0.5 ${isMax ? 'text-purple-400' : 'text-[#54a9eb]'}`}>
                       {msg.senderName}
                     </div>
                   )}
@@ -263,7 +269,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ onBackMobile }) => {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Написать сообщение..."
-              className="w-full bg-[#0e1621] border border-[#232e3c] rounded-2xl py-3 px-4 text-sm text-white placeholder-[#4e5d6e] focus:outline-none focus:border-[#2481cc] transition-colors"
+              className={`w-full bg-[#0e1621] border border-[#232e3c] rounded-2xl py-3 px-4 text-sm text-white placeholder-[#4e5d6e] focus:outline-none transition-colors ${
+                isMax ? 'focus:border-purple-500' : 'focus:border-[#2481cc]'
+              }`}
             />
           </div>
 
@@ -271,7 +279,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ onBackMobile }) => {
             type="submit"
             disabled={!inputText.trim() || isSending}
             title="Отправить (Enter)"
-            className="w-11 h-11 bg-[#2481cc] hover:bg-[#1e72b6] active:bg-[#1965a3] rounded-full flex items-center justify-center text-white transition-all shadow-md shadow-[#2481cc]/25 disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+            className={`w-11 h-11 rounded-full flex items-center justify-center text-white transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0 ${
+              isMax
+                ? 'bg-purple-600 hover:bg-purple-500 active:bg-purple-700 shadow-purple-600/25'
+                : 'bg-[#2481cc] hover:bg-[#1e72b6] active:bg-[#1965a3] shadow-[#2481cc]/25'
+            }`}
           >
             {isSending ? (
               <Loader2 className="w-5 h-5 animate-spin" />

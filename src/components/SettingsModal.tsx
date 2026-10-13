@@ -83,6 +83,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             </div>
 
             <div className="flex items-center justify-between text-xs">
+              <span className="text-[#7f91a4]">Мессенджер:</span>
+              <span className={`font-semibold ${credentials.messengerType === 'max' ? 'text-purple-400' : 'text-[#54a9eb]'}`}>
+                {credentials.messengerType === 'max' ? 'MAX Messenger' : 'Telegram'}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-xs">
               <span className="text-[#7f91a4]">idInstance:</span>
               <span className="font-mono text-white">{credentials.idInstance}</span>
             </div>
@@ -114,7 +121,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             <div className="flex items-center gap-2">
               <button
                 type="submit"
-                className="flex-1 py-2 bg-[#2481cc] hover:bg-[#1e72b6] text-white text-xs font-medium rounded-xl transition-all"
+                className={`flex-1 py-2 text-white text-xs font-medium rounded-xl transition-all ${
+                  credentials.messengerType === 'max'
+                    ? 'bg-purple-600 hover:bg-purple-500'
+                    : 'bg-[#2481cc] hover:bg-[#1e72b6]'
+                }`}
               >
                 Сохранить хост
               </button>

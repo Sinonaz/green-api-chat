@@ -94,14 +94,18 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({ isOpen, onClose }) =
     onClose();
   };
 
+  const isMax = credentials?.messengerType === 'max';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
       <div className="w-full max-w-md bg-[#17212b] border border-[#232e3c] rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#232e3c]">
           <div className="flex items-center gap-2.5">
-            <UserPlus className="w-5 h-5 text-[#54a9eb]" />
-            <h2 className="text-lg font-semibold text-white">Новый чат в Telegram</h2>
+            <UserPlus className={`w-5 h-5 ${isMax ? 'text-purple-400' : 'text-[#54a9eb]'}`} />
+            <h2 className="text-lg font-semibold text-white">
+              Новый чат в {isMax ? 'MAX' : 'Telegram'}
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -121,7 +125,9 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({ isOpen, onClose }) =
             }}
             className={`flex-1 py-3 text-xs font-medium flex items-center justify-center gap-2 border-b-2 transition-all ${
               mode === 'phone'
-                ? 'border-[#2481cc] text-[#54a9eb] bg-[#17212b]'
+                ? isMax
+                  ? 'border-purple-500 text-purple-400 bg-[#17212b]'
+                  : 'border-[#2481cc] text-[#54a9eb] bg-[#17212b]'
                 : 'border-transparent text-[#7f91a4] hover:text-white'
             }`}
           >
@@ -136,12 +142,14 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({ isOpen, onClose }) =
             }}
             className={`flex-1 py-3 text-xs font-medium flex items-center justify-center gap-2 border-b-2 transition-all ${
               mode === 'identifier'
-                ? 'border-[#2481cc] text-[#54a9eb] bg-[#17212b]'
+                ? isMax
+                  ? 'border-purple-500 text-purple-400 bg-[#17212b]'
+                  : 'border-[#2481cc] text-[#54a9eb] bg-[#17212b]'
                 : 'border-transparent text-[#7f91a4] hover:text-white'
             }`}
           >
             <AtSign className="w-4 h-4" />
-            <span>Username / Chat ID</span>
+            <span>{isMax ? 'Chat ID' : 'Username / Chat ID'}</span>
           </button>
         </div>
 
@@ -230,12 +238,16 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({ isOpen, onClose }) =
             <button
               type="submit"
               disabled={isLoading}
-              className="px-5 py-2.5 bg-[#2481cc] hover:bg-[#1e72b6] active:bg-[#1965a3] text-white text-sm font-medium rounded-xl transition-all shadow-md shadow-[#2481cc]/20 flex items-center gap-2 disabled:opacity-50"
+              className={`px-5 py-2.5 text-white text-sm font-medium rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-50 ${
+                isMax
+                  ? 'bg-purple-600 hover:bg-purple-500 active:bg-purple-700 shadow-purple-600/20'
+                  : 'bg-[#2481cc] hover:bg-[#1e72b6] active:bg-[#1965a3] shadow-[#2481cc]/20'
+              }`}
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Поиск в Telegram...</span>
+                  <span>Поиск в {isMax ? 'MAX' : 'Telegram'}...</span>
                 </>
               ) : (
                 <>
