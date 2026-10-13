@@ -1,5 +1,8 @@
 # GREEN-API Web Client (Telegram & MAX Messenger)
 
+> 🌐 **Live Demo (GitHub Pages):** [https://sinonaz.github.io/green-api-chat/](https://sinonaz.github.io/green-api-chat/)  
+> 📦 **GitHub Repository:** [https://github.com/Sinonaz/green-api-chat](https://github.com/Sinonaz/green-api-chat)
+
 Веб-клиент в стиле Telegram / MAX Web для отправки и получения текстовых сообщений через **GREEN-API** (с использованием технологии HTTP API).
 
 Поддерживает работу с обоими мессенджерами:
